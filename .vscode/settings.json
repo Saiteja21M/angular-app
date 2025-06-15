@@ -2,5 +2,16 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "saiteja21",
         "projectKey": "Saiteja21M_angular-app"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "local-db",
+            "database": "postgres",
+            "username": "postgres"
+        }
+    ]
 }
