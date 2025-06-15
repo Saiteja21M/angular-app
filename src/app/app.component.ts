@@ -35,7 +35,8 @@ export class AppComponent {
         next: results => {
           this.shows = results
             .map(r => r.show as Show)
-            .filter(show => show.image && show.image.medium);
+            .filter(show => show.image && show.image.medium)
+            .filter(show => show.premiered);
           this.loading = false;
         },
         error: () => {

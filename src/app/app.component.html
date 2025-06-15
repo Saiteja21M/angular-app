@@ -30,7 +30,14 @@
           <div class="tab-title">{{ show.name }}</div>
           <div class="tab-summary" [innerHTML]="show.summary"></div>
         </div>
-        <div class="tab-image-title">{{ show.name }}</div>
+        <div class="tab-image-title">
+          {{ show.name }}
+          <div class="tab-dates">
+            <span *ngIf="show.premiered"> {{ show.premiered }}</span> 
+            <span *ngIf="show.ended">&nbsp;|&nbsp; {{ show.ended }}</span>
+            <span *ngIf="!show.ended">&nbsp;|&nbsp;<b>Running</b></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
