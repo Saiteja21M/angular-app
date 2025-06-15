@@ -1,16 +1,16 @@
-FROM node:20-alpine
+FROM node:20-alpine as build
 
 WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-COPY dist/angular-app /app
+FROM nginx:alpine
 
-EXPOSE 4200
-
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/dist/angular-app /usr/share/nginx/html
