@@ -13,7 +13,7 @@ import { Show } from './show.model';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  host = 'http://http://3.79.204.213:8080/';
+  host = 'http://3.79.204.213:8080/';
   title = 'angular-app';
   searchQuery: string = '';
   shows: Show[] = [];
