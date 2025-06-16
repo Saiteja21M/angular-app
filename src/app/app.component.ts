@@ -13,6 +13,7 @@ import { Show } from './show.model';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  host = 'http://localhost:8082';
   title = 'angular-app';
   searchQuery: string = '';
   shows: Show[] = [];
@@ -30,7 +31,7 @@ export class AppComponent {
     }
     this.errorMessage = '';
     this.loading = true;
-    this.http.get<any[]>(`http://3.125.114.46:8080/show?showName=${encodeURIComponent(query)}`)
+    this.http.get<any[]>(`${this.host}/show?showName=${encodeURIComponent(query)}`)
       .subscribe({
         next: results => {
           this.shows = results
@@ -41,6 +42,7 @@ export class AppComponent {
         },
         error: () => {
           this.errorMessage = 'Failed to fetch shows.';
+          this.shows = [];
           this.loading = false;
         }
       });
