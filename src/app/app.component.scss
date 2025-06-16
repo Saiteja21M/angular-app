@@ -125,10 +125,10 @@ li {
   width: 220px;
   height: 320px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  margin-bottom: 3.5rem; // Increased to make more space for the tab image title
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 2.5rem; // Space for the title below the image
 }
 
 .tab-image {
@@ -138,6 +138,7 @@ li {
   border-radius: 6px;
   background: #e9ecef;
   z-index: 1;
+  display: block;
 }
 
 .tab-overlay {
@@ -182,20 +183,18 @@ li {
 .tab-image-title {
   width: 100%;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 0.8rem; // Space between image and title
   font-size: 1.15rem;
   font-weight: 700;
   color: #22223b;
-  background: transparent; // Remove white background
+  background: transparent;
   border-radius: 0 0 6px 6px;
-  padding: 0.7rem 0.2rem 0.5rem 0.2rem;
-  box-shadow: none; // Remove box shadow
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3.2rem;
+  padding: 0.4rem 0.2rem 0.2rem 0.2rem;
+  box-shadow: none;
+  position: static; // Remove absolute positioning to prevent overlap
   z-index: 3;
   transition: background 0.2s;
+  display: block;
 }
 
 .spinner-backdrop {
