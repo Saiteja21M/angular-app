@@ -30,7 +30,7 @@ export class AppComponent {
     }
     this.errorMessage = '';
     this.loading = true;
-    this.http.get<any[]>(`http://localhost:8082/show?showName=${encodeURIComponent(query)}`)
+    this.http.get<any[]>(`http://3.125.114.46:8080/show?showName=${encodeURIComponent(query)}`)
       .subscribe({
         next: results => {
           this.shows = results
