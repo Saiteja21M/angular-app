@@ -40,7 +40,8 @@ export class AppComponent {
             .filter(show => show.premiered);
           this.loading = false;
         },
-        error: () => {
+        error: (err) => {
+          console.error('API error:', err); // Log error details
           this.errorMessage = 'Failed to fetch shows.';
           this.shows = [];
           this.loading = false;
