@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Show } from './show.model';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { Show } from './show.model';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  host = 'http://172.31.4.118:8080/';
+  host = environment.apiHost;
   title = 'angular-app';
   searchQuery: string = '';
   shows: Show[] = [];
