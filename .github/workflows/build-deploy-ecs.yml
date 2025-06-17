@@ -95,11 +95,11 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$latest" >> $GITHUB_OUTPUT
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:latest" >> $GITHUB_OUTPUT
         
     - name: Download task definition
       run: |
-        aws ecs describe-task-definition --task-definition env.ECS_TASK_DEFINITION \
+        aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK_DEFINITION }} \
           --query taskDefinition > ecs-task-def.json
         
     - name: Update task definition with new image
