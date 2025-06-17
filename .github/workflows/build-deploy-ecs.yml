@@ -53,6 +53,27 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Cache node modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular app
+      run: npm run build --if-present
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -69,15 +90,13 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
+        # Build a docker container and push it to ECR
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-    - name: Fill in the new image ID in the Amazon ECS task definition
+        
+    - name: Fill in the new image ID in the Amazon ECS task definition    
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
