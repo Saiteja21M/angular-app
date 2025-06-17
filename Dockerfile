@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Build the Angular app in production mode
-RUN npm run build -- --output-path=dist
+RUN npm run build -- --output-path=dist --configuration production
 
 # Use a lightweight Node.js image to serve the app
 FROM node:20-alpine
@@ -20,7 +20,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy built files from previous stage
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist ./dist 
 
 # Install a simple static file server
 RUN npm install -g serve
@@ -29,4 +29,8 @@ RUN npm install -g serve
 EXPOSE 5000
 
 # Serve the Angular app
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["serve", "-s", "dist/browser", "-l", "5000"]
