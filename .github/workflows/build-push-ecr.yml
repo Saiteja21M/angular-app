@@ -28,6 +28,11 @@ name: Push to Amazon ECR
 
 on:
   workflow_dispatch:
+    inputs:
+      be_host:
+        description: 'Backend host (e.g., http://api.example.com:8080)'
+        required: true
+        default: 'http://localhost:8080'
 
 env:
   ECR_REPOSITORY: angular-app           # set this to your Amazon ECR repository name
@@ -84,7 +89,10 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and push it to ECR
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build \
+          --build-arg BE_HOST=${{ github.event.inputs.be_host }} \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

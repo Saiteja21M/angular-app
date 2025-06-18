@@ -28,6 +28,11 @@ name: Deploy to Amazon ECS
 
 on:
   workflow_dispatch:
+    inputs:
+      be_host:
+        description: 'Backend host (e.g., http://api.example.com:8080)'
+        required: true
+        default: 'http://localhost:8080'
 
 env:
   AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
@@ -91,7 +96,10 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and push it to ECR
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build \
+          --build-arg BE_HOST=${{ github.event.inputs.be_host }} \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
