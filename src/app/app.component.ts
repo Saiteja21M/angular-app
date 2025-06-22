@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -56,5 +56,13 @@ export class AppComponent {
 
   closePopup() {
     this.selectedShow = null;
+  }
+
+  // Listen for ESC key to close popup
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscKey(event: KeyboardEvent) {
+    if (this.selectedShow) {
+      this.closePopup();
+    }
   }
 }

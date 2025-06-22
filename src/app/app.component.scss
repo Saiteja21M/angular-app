@@ -119,35 +119,37 @@ li {
   flex-direction: column;
   align-items: center;
   width: 300px;
-  min-height: 400px;
-  padding: 1.5rem 1rem;
-  transition: box-shadow 0.2s, background 0.2s;
+  min-height: 420px;
+  padding: 1.5rem 1rem 1rem 1rem;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.25s cubic-bezier(0.4,0.2,0.2,1);
   cursor: pointer;
+  position: relative;
+  justify-content: flex-start;
 }
 
 .tab:hover {
   box-shadow: 0 6px 24px rgba(79,140,255,0.15);
   background: linear-gradient(120deg, #c7d2fe 60%, #e0e7ff 100%);
+  transform: scale(1.05);
+  z-index: 2;
 }
 
 .tab-image-wrapper {
-  position: relative;
   width: 220px;
   height: 320px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 2.5rem; // Space for the title below the image
+  justify-content: center;
+  margin-bottom: 1.2rem; // Less space below image
 }
 
 .tab-image {
   width: 220px;
   height: 320px;
   object-fit: cover;
-  border-radius: 6px;
-  background: #e9ecef;
-  z-index: 1;
+  border-radius: 8px;
+  background: #f3f3f3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   display: block;
 }
 
@@ -193,18 +195,25 @@ li {
 .tab-image-title {
   width: 100%;
   text-align: center;
-  margin-top: 0.8rem; // Space between image and title
+  margin-top: 0.5rem;
   font-size: 1.15rem;
   font-weight: 700;
   color: #22223b;
   background: transparent;
   border-radius: 0 0 6px 6px;
-  padding: 0.4rem 0.2rem 0.2rem 0.2rem;
+  padding: 0.2rem 0.2rem 0.1rem 0.2rem;
   box-shadow: none;
-  position: static; // Remove absolute positioning to prevent overlap
+  position: static;
   z-index: 3;
   transition: background 0.2s;
   display: block;
+}
+
+.tab-dates {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #444;
+  margin-top: 0.2rem;
 }
 
 .spinner-backdrop {
@@ -229,6 +238,78 @@ li {
 @keyframes spin {
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}
+}
+
+.show-popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.show-popup-content {
+  background: linear-gradient(120deg, #d4e0f3 40%, #a6c1ee 100%);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 95vw;
+  min-height: 320px;
+  max-height: 90vh;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(251,194,235,0.18), 0 2px 12px rgba(166,193,238,0.12);
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow: auto;
+  border: 2px solid #11131d;
+  animation: popup-fade-in 0.4s cubic-bezier(0.4,0.2,0.2,1);
+}
+
+@keyframes popup-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.show-popup-img {
+  flex: 0 0 180px;
+  max-width: 180px;
+  max-height: 260px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f3f3f3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-right: 1rem;
+  align-self: flex-start;
+}
+
+.show-popup-details {
+  flex: 1 1 0;
+  overflow-y: auto;
+  max-height: 80vh;
+  padding-right: 0.5rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #888;
+  z-index: 2;
+}
+.close-btn:hover {
+  color: #333;
 }
 
 @media (max-width: 600px) {
@@ -266,6 +347,24 @@ li {
     width: 95vw;
     max-width: 320px;
     height: 180px;
+  }
+  .show-popup-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 98vw;
+    min-width: 0;
+  }
+  .show-popup-img {
+    max-width: 90vw;
+    width: 100%;
+    height: auto;
+    margin: 0 0 1rem 0;
+  }
+  .show-popup-details {
+    max-height: 60vh;
+    padding-right: 0;
   }
 }
 

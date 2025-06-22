@@ -26,19 +26,42 @@
           [alt]="show.name"
           class="tab-image"
         />
-        <div class="tab-overlay" (click)="openShow(show); $event.stopPropagation()">
-          <div class="tab-title">{{ show.name }}</div>
-          <div class="tab-summary" [innerHTML]="show.summary"></div>
-        </div>
-        <div class="tab-image-title">
-          {{ show.name }}
-          <div class="tab-dates">
-            <span *ngIf="show.premiered"> {{ show.premiered }}</span> 
-            <span *ngIf="show.ended">&nbsp;|&nbsp; {{ show.ended }}</span>
-            <span *ngIf="!show.ended">&nbsp;|&nbsp;<b>Running</b></span>
-          </div>
+      </div>
+      <div class="tab-image-title">
+        {{ show.name }}
+        <div class="tab-dates">
+          <span *ngIf="show.premiered"> {{ show.premiered }}</span> 
+          <span *ngIf="show.ended">&nbsp;|&nbsp; {{ show.ended }}</span>
+          <span *ngIf="!show.ended">&nbsp;|&nbsp;<b>Running</b></span>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup for more info -->
+<div class="show-popup" *ngIf="selectedShow">
+  <div class="show-popup-content">
+    <button class="close-btn" (click)="closePopup()">×</button>
+    <img
+      *ngIf="selectedShow.image?.original"
+      [src]="selectedShow.image?.original"
+      [alt]="selectedShow.name"
+      class="show-popup-img"
+    />
+    <div class="show-popup-details">
+      <h2>{{ selectedShow.name }}</h2>
+      <div [innerHTML]="selectedShow.summary"></div>
+      <p><b>Genres:</b> {{ selectedShow.genres.join(', ') }}</p>
+      <p><b>Language:</b> {{ selectedShow.language }}</p>
+      <p><b>Status:</b> {{ selectedShow.status }}</p>
+      <p><b>Premiered:</b> {{ selectedShow.premiered }}</p>
+      <p *ngIf="selectedShow.ended"><b>Ended:</b> {{ selectedShow.ended }}</p>
+      <p *ngIf="selectedShow.rating?.average"><b>Rating:</b> {{ selectedShow.rating.average }}</p>
+      <p *ngIf="selectedShow.officialSite">
+        <b>Watch Here: </b>
+        <a [href]="selectedShow.officialSite" target="_blank">{{ selectedShow.officialSite }}</a>
+      </p>
     </div>
   </div>
 </div>
