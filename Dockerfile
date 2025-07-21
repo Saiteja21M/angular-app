@@ -29,7 +29,7 @@ COPY --from=build /app/dist ./dist
 # Install a simple static file server
 RUN npm install -g serve
 
-# Expose port 5000
-EXPOSE 5000
+# Expose port 4200
+EXPOSE 4200
 
-CMD ["serve", "-s", "dist/browser", "-l", "5000"]
+CMD ["serve", "-s", "dist/browser", "-l", "4200"]
