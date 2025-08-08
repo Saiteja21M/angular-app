@@ -1,5 +1,5 @@
 // src/environments/environment.ts
 export const environment = {
   production: false,
-  apiHost: 'http://localhost:8082'
+  apiHost: 'http://localhost:8080'
 };
